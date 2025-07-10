@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>perfil</title>
+    <link rel="stylesheet" href="../static/perfil.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=League+Spartan:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container-main">
+      <div class="container">
+        
+        <h1>Olá, {{ nome }}, adicione uma foto sua</h1>
+        <form
+          action="{{ url_for('upload_foto', nome=nome) }}"
+          method="POST"
+          enctype="multipart/form-data"
+        >
+          <label for="file-input">
+            {% if foto %}
+            <img
+              class="img-user"
+              src="{{ url_for('static', filename='uploads/' + foto)}}"
+              alt="img-perfil"
+            />
+            {% else %}
+            <img
+              class="img"
+              src="{{ url_for('static', filename='imagens/perfil.png') }}"
+              alt="img-perfil"
+            />
+            {% endif %}
+          </label>
+          <input
+            type="file"
+            id="file-input"
+            name="foto"
+            style="display: none"
+            onchange="this.form.submit()"
+          />
+        </form>
+        <a href="{{ url_for('voltar') }}">
+          <img
+            class="btn-back"
+            src="{{ url_for('static', filename='imagens/circulo-de-flecha.png') }}"
+            alt="img-voltar"
+          />
+        </a>
+
+        <a href="{{ url_for('calculadora') }}">
+          <img
+            class="btn-next"
+            src="{{ url_for('static', filename='imagens/circulo-de-flecha.png')}}"
+            alt="img-next"
+          />
+        </a>
+      </div>
+    </div>
+  </body>
+</html>

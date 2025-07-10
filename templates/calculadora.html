@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>claculadora</title>
+    <link rel="stylesheet" href="../static/calculadora.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=League+Spartan:wght@100..900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+
+
+    <div class="container-main">
+        <div class="container">
+            <div class="ajuda">
+          <img
+            src="{{ url_for('static', filename='imagens/simbolo-de-informacao.png') }}"
+            alt="informaçoes"
+            onclick="mostrarAjuda()"
+          />
+        </div>
+
+        <div id="caixa-ajuda" class="caixa-ajuda">
+          <p>
+            Preencha os campos com:
+            <br /><br />
+            <strong>Distância:</strong> em km (ex: 300)
+            <br />
+            <strong>Consumo médio:</strong> quanto seu veículo faz por litro
+            (ex: 12 km/l)
+            <br />
+            <strong>Preço do combustível:</strong> ex: 5.99 <br /><br />
+            Clique em "Calcular" para ver os litros necessários e o custo total.
+          </p>
+        </div>
+            {% if foto %}
+                <img class="foto-perfil" src="{{ url_for('static', filename='uploads/' + foto)}}" alt="foto de perfil">
+            {% else %}
+                <img class="foto-perfil" src="{{ url_for('static', filename='imagens/perfil.png') }}" alt="foto perfil padrao">
+            {% endif %}
+            <form class="box" action="{{url_for('calculadora')}}" method="post">
+                <input type="hidden" name="foto" value="{{ foto }}">
+
+                <label>Distância da viagem:</label>
+                <input type="number" name="distancia" placeholder="Ex:300..." required>
+
+                <label>Consumo medio(km/l):</label>
+                <input type="number" name="consumo_medio" placeholder="Ex: 12" required>
+
+                <label>Preço de combustivel:</label>
+                <input type="text" name="preco" placeholder="Ex: 6.25" required>
+
+                <button type="submit">Calcular</button>
+
+                {% if div is not none %}
+                <p class="resultado">Litros necessarios: {{ div | round(2) }} km/L</p>
+                {% endif %}
+
+                {% if resultado is not none %}
+                <p class="resultado">Custo total: {{ resultado | round(2) }} R$</p>
+                {% endif %}
+            </form>
+
+            <a href="{{ url_for('voltar') }}">
+                <img class="btn-back" src="{{ url_for('static', filename='imagens/circulo-de-flecha.png') }}"
+                    alt="img-voltar">
+            </a>
+        </div>
+    </div>
+    <script>
+        function mostrarAjuda(){
+            const ajuda = document.getElementById('caixa-ajuda');
+            ajuda.style.display = ajuda.style.display === 'none' ? 'block' : 'none';
+        }
+    </script>
+</body>
+
+</html>
